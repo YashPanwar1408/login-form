@@ -1,18 +1,8 @@
-import { useLocation, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 
 const Home = () => {
   const location = useLocation()
-  const navigate = useNavigate()
-  const username = location.state?.username
-
-  // Redirect to login if username is not present (conditional routing)
-  useEffect(() => {
-    if (!username) {
-      navigate("/", { replace: true })
-    }
-  }, [username, navigate])
-
+  const username = location.state?.username || "User"
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh]">
       <h1 className="text-2xl font-bold">Hello {username}!</h1>

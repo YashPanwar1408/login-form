@@ -1,13 +1,20 @@
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const navigate = useNavigate()
+  const [loginError, setLoginError] = useState("")
 
   const onSubmit = (data) => {
-    // Navigate to Home and pass username as state
-    navigate("/home", { state: { username: data.username } })
+    // Hardcoded credentials
+    if (data.username === "Yash" && data.password === "Yash123") {
+      localStorage.setItem("isLoggedIn", "true")
+      navigate("/home", { state: { username: data.username } })
+    } else {
+      setLoginError("Invalid username or password")
+    }
   }
 
   return (
@@ -17,6 +24,7 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2 className="text-xl font-bold text-center mb-4">Login</h2>
+        {loginError && <div className="text-red-500 text-center">{loginError}</div>}
         <div>
           <label className="block mb-1">Username</label>
           <input
